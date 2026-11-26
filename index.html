@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#171a21">
+  <title>Vertex Providers</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div>
+        <h1>Vertex Providers</h1>
+        <p class="subtitle">Provider catalog, manifest links, and QR setup for the Vertex app.</p>
+      </div>
+      <div class="stats" id="stats" aria-live="polite">
+        <span class="stat-pill" id="stat-total">Loading...</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="methods-grid" aria-label="Setup methods">
+      <article class="panel">
+        <div class="panel-head">
+          <span class="badge">Method 1</span>
+          <h2>Copy Links</h2>
+        </div>
+        <p class="muted">Copy a source URL below and paste it into the Vertex app Provider Manager.</p>
+
+        <div class="copy-list">
+          <div class="copy-row">
+            <div class="copy-meta">
+              <span class="copy-label">Manifest JSON (Recommended)</span>
+              <code class="copy-url" id="url-manifest">https://raw.githubusercontent.com/vertex2029/vertex-providers/main/manifest.json</code>
+            </div>
+            <div class="copy-actions">
+              <button class="btn btn-primary" data-copy-target="url-manifest">Copy</button>
+              <button class="btn" data-qr-target="url-manifest" data-qr-label="Manifest JSON">QR</button>
+            </div>
+          </div>
+
+          <div class="copy-row">
+            <div class="copy-meta">
+              <span class="copy-label">GitHub Repository</span>
+              <code class="copy-url" id="url-repo">https://github.com/vertex2029/vertex-providers</code>
+            </div>
+            <div class="copy-actions">
+              <button class="btn btn-primary" data-copy-target="url-repo">Copy</button>
+              <button class="btn" data-qr-target="url-repo" data-qr-label="GitHub Repository">QR</button>
+            </div>
+          </div>
+
+          <div class="copy-row">
+            <div class="copy-meta">
+              <span class="copy-label">URLs Registry (urls.json)</span>
+              <code class="copy-url" id="url-registry">https://raw.githubusercontent.com/vertex2029/vertex-providers/main/urls.json</code>
+            </div>
+            <div class="copy-actions">
+              <button class="btn btn-primary" data-copy-target="url-registry">Copy</button>
+              <button class="btn" data-qr-target="url-registry" data-qr-label="URLs Registry">QR</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel qr-panel">
+        <div class="panel-head">
+          <span class="badge">Method 2</span>
+          <h2>Scan QR Code</h2>
+        </div>
+        <p class="muted" id="qr-caption">Manifest JSON — scan with your phone or TV camera.</p>
+        <div class="qr-box">
+          <canvas id="qr-canvas" width="220" height="220" aria-label="QR Code"></canvas>
+        </div>
+        <div class="qr-footer">
+          <code class="qr-value" id="qr-value"></code>
+          <div class="qr-buttons">
+            <button class="btn" id="qr-copy-btn">Copy Active URL</button>
+            <button class="btn" id="qr-download-btn">Download PNG</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel manifest-box" aria-label="manifest.json viewer">
+      <div class="manifest-head">
+        <div>
+          <h2>manifest.json</h2>
+          <p class="muted">Live provider manifest loaded from this repository.</p>
+        </div>
+        <div class="manifest-actions">
+          <button class="btn" id="toggle-manifest-btn" aria-expanded="false">Show JSON</button>
+          <button class="btn btn-primary" id="copy-manifest-json-btn">Copy JSON</button>
+          <a class="btn" id="open-manifest-link" href="https://raw.githubusercontent.com/vertex2029/vertex-providers/main/manifest.json" target="_blank" rel="noopener noreferrer">Open Raw</a>
+        </div>
+      </div>
+      <pre class="code-box hidden" id="manifest-pre"><code id="manifest-code"></code></pre>
+    </section>
+
+    <section class="panel" aria-label="Providers directory">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <label class="sr-only" for="search-input">Search providers</label>
+          <input id="search-input" type="search" enterkeyhint="search" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Search providers by name, id, or region...">
+        </div>
+        <div class="filters" id="type-filters" role="group" aria-label="Category filter"></div>
+        <label class="toggle-label">
+          <input type="checkbox" id="show-disabled">
+          <span>Show disabled</span>
+        </label>
+      </div>
+
+      <div class="status-banner hidden" id="status-banner"></div>
+      <div class="provider-grid" id="provider-grid"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="./qr.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
